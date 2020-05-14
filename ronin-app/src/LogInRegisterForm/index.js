@@ -19,11 +19,24 @@ export default class LogInRegisterForm extends Component {
 			this.setState({ action: 'Login'})
 		}
 	}
+
+	handleChange = (event) => {
+		this.setState({
+			[event.target.name]: event.target.value
+		})
+	}
+
+	handleSubmit = (event) => {
+		event.preventDefault()
+		console.log(` here is the data in ${this.state.action.toLowerCase()} with the following conditions `)
+		console.log(this.state);
+
+	}
 	render () {
 		return (
 			<React.Fragment>
 				<h2> User {this.state.action}</h2>
-				<Form>
+				<Form onSubmit={this.handleSubmit}>
 				{ 
 					this.state.action === "Register"
 					&&
@@ -34,6 +47,7 @@ export default class LogInRegisterForm extends Component {
 							name='lastname'
 							placeholder='Enter Last Name'
 							value={this.state.username}
+							onChange={this.handleChange}
 						/>
 						<Label> First Name:</Label>
 						<Form.Input
@@ -41,6 +55,7 @@ export default class LogInRegisterForm extends Component {
 							name='firstname'
 							placeholder='Enter first name'
 							value={this.state.firstname}
+							onChange={this.handleChange}
 						/>
 					</React.Fragment>
 				} 
@@ -51,6 +66,7 @@ export default class LogInRegisterForm extends Component {
 						name='username'
 						placeholder='Enter your Username'
 						value={this.state.username}
+						onChange={this.handleChange}
 					/>
 					<Label> Email:</Label>
 					<Form.Input
@@ -58,13 +74,15 @@ export default class LogInRegisterForm extends Component {
 						name='email'
 						placeholder='Enter your email'
 						value={this.state.email}
+						onChange={this.handleChange}
 					/>
 					<Label>Password:</Label>
 					<Form.Input
-						type='text'
+						type='password'
 						name='password'
 						placeholder='Enter your Password'
 						value={this.state.password}
+						onChange={this.handleChange}
 					/>
 				{
 					this.state.action === 'Register'
@@ -75,6 +93,7 @@ export default class LogInRegisterForm extends Component {
 							type='checkbox'
 							name='is_admin'
 							value={this.state.is_admin}
+							onChange={this.handleChange}
 						/>
 					</React.Fragment>
 				}
