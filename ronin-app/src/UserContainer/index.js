@@ -15,17 +15,18 @@ export default class UserContainer extends Component {
 		try {
 			const url = process.env.REACT_APP_API_URL + "/api/v1/users/"
 			console.log('tyring to fetch data from ');
-			console.log(url);
 			const usersResponse = await fetch(url)
 			const usersJson = await usersResponse.json()
-			console.log(" here is the data in users container");
-			console.log(usersJson);
+			this.setState({
+				users: usersJson.data
+			})
 		} catch (error) {
 			console.log('Error getting users data');
-
 		}
 	}
 	render() {
+		console.log("here is the this.state in render() in user container");
+		console.log(this.state);
 		return(
 			<h2>User Contianer</h2>
 		)
