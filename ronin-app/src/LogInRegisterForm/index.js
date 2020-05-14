@@ -24,20 +24,27 @@ export default class LogInRegisterForm extends Component {
 			<React.Fragment>
 				<h2> User {this.state.action}</h2>
 				<Form>
-					<Label> Last Name:</Label>
-					<Form.Input
-						type='text'
-						name='lastname'
-						placeholder='Enter Last Name'
-						value={this.state.username}
-					/>
-					<Label> First Name:</Label>
-					<Form.Input
-						type='text'
-						name='firstname'
-						placeholder='Enter first name'
-						value={this.state.firstname}
-					/>
+				{ 
+					this.state.action === "Register"
+					&&
+					<React.Fragment>
+						<Label> Last Name:</Label>
+						<Form.Input
+							type='text'
+							name='lastname'
+							placeholder='Enter Last Name'
+							value={this.state.username}
+						/>
+						<Label> First Name:</Label>
+						<Form.Input
+							type='text'
+							name='firstname'
+							placeholder='Enter first name'
+							value={this.state.firstname}
+						/>
+					</React.Fragment>
+				} 
+
 					<Label> Username:</Label>
 					<Form.Input
 						type='text'
@@ -59,12 +66,18 @@ export default class LogInRegisterForm extends Component {
 						placeholder='Enter your Password'
 						value={this.state.password}
 					/>
-					<Label className='ui checkbox'>Admin Account</Label>
-					<Form.Input
-						type='checkbox'
-						name='is_admin'
-						value={this.state.is_admin}
-					/>
+				{
+					this.state.action === 'Register'
+					&&
+					<React.Fragment>
+						<Label className='ui checkbox'>Admin Account</Label>
+						<Form.Input
+							type='checkbox'
+							name='is_admin'
+							value={this.state.is_admin}
+						/>
+					</React.Fragment>
+				}
 					<Button type='Submit'>
 						{this.state.action === 'Login' ? "Log In": "Register"}
 					</Button>
