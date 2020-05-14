@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import UserContainer from './UserContainer'
 import './App.css';
 
