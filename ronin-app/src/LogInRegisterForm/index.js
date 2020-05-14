@@ -10,7 +10,7 @@ export default class LogInRegisterForm extends Component {
 			username:'',
 			firstname:'',
 			lastname:'',
-			is_admin:'',
+			is_admin: false,
 			action: 'Login'
 		}
 	}

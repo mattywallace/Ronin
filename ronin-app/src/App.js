@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import './App.css';
 import UserContainer from './UserContainer'
+import CourseContainer from './CourseContainer'
 import LogInRegisterForm from './LogInRegisterForm'
 
 
@@ -71,16 +72,20 @@ export default class App extends Component {
   render () {
   return (
    <div className="App">
-   {
-    this.state.loggedIn
-    ?
-    <UserContainer />
-    :
-    <LogInRegisterForm 
-      login={this.login}
-      register={this.register}
-    />
-  }
+     {
+      this.state.loggedIn
+      ?
+      <React.Fragment>
+        <CourseContainer />
+        <UserContainer />
+      </React.Fragment>
+      :
+      <LogInRegisterForm 
+        login={this.login}
+        register={this.register}
+      />
+    }
+
   </div>
   );
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import UserList from '../UserList'
+import CourseContainer from '../CourseContainer'
 
 export default class UserContainer extends Component {
 	constructor() {
@@ -33,8 +33,6 @@ export default class UserContainer extends Component {
 		return(
 			<React.Fragment>
 				<h2>User Contianer</h2>
-				<UserList />
-				
 			</React.Fragment>
 		)
 	}
