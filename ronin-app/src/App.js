@@ -1,14 +1,32 @@
-import React from 'react'
+import React, {Component} from 'react'
 import UserContainer from './UserContainer'
+import LogInRegisterForm from './LogInRegisterForm'
 import './App.css';
 
-function App() {
-  console.log(process.env);
+
+export default class App extends Component {
+  
+  constructor() {
+    super()
+
+    this.state = {
+      loggedIn: false, 
+      loggedInUserEmail: ""
+    }
+  }
+  render () {
   return (
-    <div className="App">
-     <UserContainer />
-    </div>
+   <div className="App">
+   {
+    this.state.loggedIn
+    ?
+    <UserContainer />
+    :
+    <LogInRegisterForm />
+  }
+  </div>
   );
 }
+}
 
-export default App;
+
