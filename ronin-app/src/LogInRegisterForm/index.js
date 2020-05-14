@@ -8,6 +8,9 @@ export default class LogInRegisterForm extends Component {
 			email: '',
 			password: '',
 			username:'',
+			firstname:'',
+			lastname:'',
+			is_admin:'',
 			action: 'Login'
 		}
 	}
@@ -31,7 +34,14 @@ export default class LogInRegisterForm extends Component {
 		console.log(` here is the data in ${this.state.action.toLowerCase()} with the following conditions `)
 		console.log(this.state);
 
+		if (this.state.action === "Register") {
+			this.props.register(this.state)
+		} else {
+			this.props.login(this.state)
+		}
 	}
+
+
 	render () {
 		return (
 			<React.Fragment>
@@ -46,7 +56,7 @@ export default class LogInRegisterForm extends Component {
 							type='text'
 							name='lastname'
 							placeholder='Enter Last Name'
-							value={this.state.username}
+							value={this.state.lastname}
 							onChange={this.handleChange}
 						/>
 						<Label> First Name:</Label>
@@ -70,7 +80,7 @@ export default class LogInRegisterForm extends Component {
 					/>
 					<Label> Email:</Label>
 					<Form.Input
-						type='text'
+						type='email'
 						name='email'
 						placeholder='Enter your email'
 						value={this.state.email}
