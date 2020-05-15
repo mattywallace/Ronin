@@ -34,6 +34,27 @@ export default class courseContainer extends Component {
 		}
 	}
 
+	deleteCourse = async (idOfCourseToDelete) => {
+		const url = process.env.REACT_APP_API_URL + "/api/v1/courses/" + idOfCourseToDelete
+		try {
+			const deleteCourseResponse = await fetch(url, {
+				credentials: "include",
+				method: "DELETE"
+			})
+			console.log("deleteCoruseResponse", deleteCourseResponse);
+			const deleteCourseJson = await deleteCourseResponse.json()
+			console.log("deleteCourseJson", deleteCourseJson);
+			if (deleteCourseResponse.status == 200) {
+				this.setState({
+				courses: this.state.courses.filter(course => course.id != idOfCourseToDelete)
+				})
+			}	
+		} catch (error) {
+			console.error('Error deleting course');
+			console.error(error)
+		}
+	}
+
 	createCourse = async (courseToAdd) => {
 		console.log('THIS SHOULD BE PROPS FROM APP');
  		console.log(this.props.userInfo)
@@ -78,6 +99,7 @@ export default class courseContainer extends Component {
 					createCourse={this.createCourse}/>
 				<CourseList 
 					courses={this.state.courses} 
+					deleteCourse={this.deleteCourse}
 				/>
 			</React.Fragment>
 		)

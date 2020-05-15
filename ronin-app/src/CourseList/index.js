@@ -33,6 +33,12 @@ export default function CourseList(props) {
 					<Button>
 						View
 					</Button>
+					<Button 
+						className='negative ui button'
+						onClick={ () => props.deleteCourse(course.id)}
+					>
+						Delete
+					</Button>
 				</Card.Content>
 			</Card>
 		)

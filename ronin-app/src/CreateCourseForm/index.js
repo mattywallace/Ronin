@@ -4,7 +4,7 @@ import {Form, Button, Label} from 'semantic-ui-react'
 export default class CreateCourseForm extends Component {
 	constructor(props) {
 		super(props)
-		this.state ={
+		this.state = {
 			adminstrator: this.props.userInfo.loggedInUserId,
 			course_name:'',
 			description:'',
@@ -67,7 +67,7 @@ export default class CreateCourseForm extends Component {
 							value={this.state.certification}
 							onChange={this.checkBoxChange}
 						/>
-						<Button type='Submit'>
+						<Button className='positive ui button' type='Submit'>
 							Create Course
 						</Button>
 					</Form>
