@@ -55,7 +55,7 @@ export default class courseContainer extends Component {
 			const createCourseJson = await createdCourseResponse.json()
 			console.log('here is what we got back after trying to add a course');
 			console.log(createCourseJson);
-			if (createdCourseResponse.status === 200 ){
+			if (createdCourseResponse.status === 201 ){
 				this.setState({
 					courses:[...this.state.courses, createCourseJson.data]
 				})
