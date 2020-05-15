@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import CourseContainer from '../CourseContainer'
+
 
 export default class UserContainer extends Component {
 	constructor() {

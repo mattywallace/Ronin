@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import './App.css';
-import UserContainer from './UserContainer'
 import CourseContainer from './CourseContainer'
 import LogInRegisterForm from './LogInRegisterForm'
 
@@ -12,7 +11,8 @@ export default class App extends Component {
 
     this.state = {
       loggedIn: false, 
-      loggedInUserEmail: ""
+      loggedInUserEmail: "",
+      loggedInUserId: ""
     }
   }
   
@@ -34,7 +34,8 @@ export default class App extends Component {
       if(registerResponse.status === 201) {
         this.setState({
           loggedIn: true,
-          loggedInUserEmail: registerJson.data.email
+          loggedInUserEmail: registerJson.data.email,
+          loggedInUserId: registerJson.data.id
         })
       }
     } catch (error) {
@@ -47,7 +48,7 @@ export default class App extends Component {
     const url = process.env.REACT_APP_API_URL + '/api/v1/users/login'
     try {
       const loginResponse = await fetch(url, {
-        creadentials:'include',
+        credentials:'include',
         method: 'POST',
         body:JSON.stringify(loginInfo),
         headers: {
@@ -57,12 +58,16 @@ export default class App extends Component {
       console.log('loginResponse', loginResponse);
       const loginJson = await loginResponse.json()
       console.log('loginJson', loginJson);
+      console.log(loginJson.data);
        if(loginResponse.status === 200) {
         this.setState({
           loggedIn: true,
-          loggedInUserEmail: loginJson.data.email
+          loggedInUserEmail: loginJson.data.email,
+          loggedInUserId: loginJson.data.id
         })
       }
+      console.log("here is what is currently in state");
+      console.log(this.state);
     } catch(error) {
       console.error('Error trying to log in')
       console.error(error)
@@ -76,8 +81,7 @@ export default class App extends Component {
       this.state.loggedIn
       ?
       <React.Fragment>
-        <CourseContainer />
-        <UserContainer />
+        <CourseContainer userInfo={this.state}/>
       </React.Fragment>
       :
       <LogInRegisterForm 

@@ -2,16 +2,26 @@ import React, {Component} from 'react'
 import {Form, Button, Label} from 'semantic-ui-react'
 
 export default class CreateCourseForm extends Component {
-	constructor() {
-		super()
+	constructor(props) {
+		super(props)
 		this.state ={
+			adminstrator: this.props.userInfo.loggedInUserId,
 			course_name:'',
-			administrator:'',
 			description:'',
 			certification: false
 		}
 	}
 
+	checkBoxChange = (event, data) => {
+		console.log(event.target.name);
+		console.log(event.target.value);
+		console.log(data);
+		this.setState({
+			certification: !this.state.certification
+		})
+	}
+
+ 
 	handleChange = (event) => {
 		this.setState({
 			[event.target.name]: event.target.value
@@ -20,8 +30,12 @@ export default class CreateCourseForm extends Component {
 
 	handleSubmit = (event) => {
 		event.preventDefault()
-		console.log(` here is the data in ${this.state.action.toLowerCase()} with the following conditions `)
-		console.log(this.state);
+		this.props.createCourse(this.state)
+		this.setState({
+			course_name:'',
+			description:'',
+			certification: false
+		})
 }
 
 	render() {
@@ -45,13 +59,13 @@ export default class CreateCourseForm extends Component {
 							value={this.state.descrption}
 							onChange={this.handleChange}
 						/>
-						<Label> Certification </Label>
+						<Label className='ui checkbox'> Certification </Label>
 						<Form.Input
 							type='checkbox'
 							name='certification'
 							placeholder='Enter Course Name'
 							value={this.state.certification}
-							onChange={this.handleChange}
+							onChange={this.checkBoxChange}
 						/>
 						<Button type='Submit'>
 							Create Course

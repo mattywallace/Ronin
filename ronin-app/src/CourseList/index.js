@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card } from 'semantic-ui-react'
+import { Card, Button } from 'semantic-ui-react'
 
 
 export default function CourseList(props) {
@@ -13,19 +13,26 @@ export default function CourseList(props) {
 						{course.course_name}
 					</Card.Header>
 					<Card.Meta>
-						{course.administrator.username}
+						Instructor: {course.administrator.username}	
 					</Card.Meta>
+					
 					{
 						course.certification === true 
 						&&
 						<Card.Meta>
-							Certification upon Completion
+							Certification Upon Completion
 						</Card.Meta>
 					}
 
 					<Card.Description>
 						{course.description}
 					</Card.Description>
+					<Button>
+						Enroll
+					</Button> 
+					<Button>
+						View
+					</Button>
 				</Card.Content>
 			</Card>
 		)

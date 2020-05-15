@@ -6,7 +6,7 @@ export default class courseContainer extends Component {
 	constructor() {
 		super()
 		this.state = {
-			courses: []
+			courses: [],
 		}
 	}
 
@@ -16,7 +16,7 @@ export default class courseContainer extends Component {
 
 	getCourses = async () => {
 		try {
-			const url = process.env.REACT_APP_API_URL + "/api/v1/courses/"
+			const url = process.env.REACT_APP_API_URL + "/api/v1/courses/" 
 			const coursesResponse = await fetch(url, {
 				   	credentials: 'include',
 				   	headers: { 
@@ -33,14 +33,52 @@ export default class courseContainer extends Component {
 			console.log('Error getting courses data');
 		}
 	}
+
+	createCourse = async (courseToAdd) => {
+		console.log('THIS SHOULD BE PROPS FROM APP');
+ 		console.log(this.props.userInfo)
+ 		console.log(this.props.userInfo.loggedInUserId);
+ 		console.log('HERE IS THE COURSE BEING ADDED');
+ 		console.log(courseToAdd);
+		try {
+			const url = process.env.REACT_APP_API_URL + "/api/v1/courses/create" 
+			const createdCourseResponse = await fetch(url, {
+				method: 'POST',
+				credentials: 'include',
+				body: JSON.stringify(courseToAdd),
+				headers: {
+					'Content-Type':'application/json'
+				}
+			})
+			console.log("createdCourseResponse", createdCourseResponse);
+
+			const createCourseJson = await createdCourseResponse.json()
+			console.log('here is what we got back after trying to add a course');
+			console.log(createCourseJson);
+			if (createdCourseResponse.status === 200 ){
+				this.setState({
+					courses:[...this.state.courses, createCourseJson.data]
+				})
+			}
+		} catch (error) {
+			console.error("Error adding course");
+			console.error(error)
+		}
+
+	}
+	
 	render() {
 		console.log("here is the this.state in render() in user container");
 		console.log(this.state);
 		return(
 			<React.Fragment>
 				<h2>Courses Contianer</h2>
-				<CreateCourseForm />
-				<CourseList courses={this.state.courses} />
+				<CreateCourseForm 
+					userInfo={this.props.userInfo}
+					createCourse={this.createCourse}/>
+				<CourseList 
+					courses={this.state.courses} 
+				/>
 			</React.Fragment>
 		)
 	}
