@@ -2,6 +2,8 @@ import React from 'react'
 import { Card, Button } from 'semantic-ui-react'
 
 
+
+
 export default function CourseList(props) {
 	console.log("props in courselidst");
 	console.log(props);
@@ -27,17 +29,21 @@ export default function CourseList(props) {
 					<Card.Description>
 						{course.description}
 					</Card.Description>
-					<Button>
+					<Button 
+						onClick={ () => props.createEnrollment(course.id)}
+							>
 						Enroll
 					</Button> 
-					<Button>
-						View
+					<Button 
+						basic color='purple' 
+						onClick={ () => props.editCourse(course.id)}>
+						Course Editor
 					</Button>
 					<Button 
-						className='negative ui button'
+						className='negative mini ui button'
 						onClick={ () => props.deleteCourse(course.id)}
 					>
-						Delete
+						Delete Course
 					</Button>
 				</Card.Content>
 			</Card>

@@ -8,7 +8,7 @@ export default class CreateCourseForm extends Component {
 			adminstrator: this.props.userInfo.loggedInUserId,
 			course_name:'',
 			description:'',
-			certification: false
+			certification: false,
 		}
 	}
 
@@ -34,11 +34,12 @@ export default class CreateCourseForm extends Component {
 		this.setState({
 			course_name:'',
 			description:'',
-			certification: false
+			certification: false,
 		})
 }
 
 	render() {
+		console.log(this.state);
 		return (
 			<React.Fragment>
 				<h2>Course Creator</h2>
@@ -56,14 +57,14 @@ export default class CreateCourseForm extends Component {
 							type='text'
 							name='description'
 							placeholder='Describe Course'
-							value={this.state.descrption}
+							value={this.state.description}
 							onChange={this.handleChange}
 						/>
 						<Label className='ui checkbox'> Certification </Label>
 						<Form.Input
 							type='checkbox'
 							name='certification'
-							placeholder='Enter Course Name'
+							checked={this.state.certification}
 							value={this.state.certification}
 							onChange={this.checkBoxChange}
 						/>
