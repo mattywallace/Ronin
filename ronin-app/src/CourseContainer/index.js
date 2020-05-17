@@ -138,6 +138,7 @@ export default class courseContainer extends Component {
 
 					<CourseList 
 						courses={this.state.courses} 
+						userInfo={this.props.userInfo}
 						deleteCourse={this.deleteCourse}
 						editCourse={this.editCourse}
 						createEnrollment={this.props.createEnrollment}

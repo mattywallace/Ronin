@@ -34,17 +34,23 @@ export default function CourseList(props) {
 							>
 						Enroll
 					</Button> 
-					<Button 
-						basic color='purple' 
-						onClick={ () => props.editCourse(course.id)}>
-						Course Editor
-					</Button>
-					<Button 
-						className='negative mini ui button'
-						onClick={ () => props.deleteCourse(course.id)}
-					>
-						Delete Course
-					</Button>
+				{
+					props.userInfo.loggedInUserIsAdmmin === true
+					&&
+					<React.Fragment>
+						<Button 
+							basic color='purple' 
+							onClick={ () => props.editCourse(course.id)}>
+							Course Editor
+						</Button>
+						<Button 
+							className='negative mini ui button'
+							onClick={ () => props.deleteCourse(course.id)}
+						>
+							Delete Course
+						</Button>
+					</React.Fragment>
+				}
 				</Card.Content>
 			</Card>
 		)

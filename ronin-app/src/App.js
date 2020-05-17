@@ -81,8 +81,28 @@ export default class App extends Component {
     }
   }
 
-  logout = () => {
-    console.log('Log Out');
+  logout = async () => {
+    try {
+      const url = process.env.REACT_APP_API_URL + '/api/v1/users/logout'
+      const logoutResponse = await fetch(url, {
+        credentials:'include'
+      })
+      console.log('logoutResponse', logoutResponse);
+      const logoutJson = await logoutResponse.json()
+      console.log(logoutJson, 'logoutJson');
+      if( logoutResponse.status === 200 ) {
+        this.setState({
+          loggedIn:false,
+          loggedInUserEmail:'',
+          loggedInUserId:'',
+          loggedInUserIsAdmin: false,
+        })
+      }
+    } catch (error) {
+      console.error('error logging out');
+      console.error(error)
+    }
+    
   }
 
   componentDidMount() {
@@ -149,7 +169,11 @@ export default class App extends Component {
       this.state.loggedIn
       ?
       <React.Fragment>
-      <Header logout={this.logout} />
+      <Header 
+        logout={this.logout} 
+        email={this.state.loggedInUserEmail} 
+        />
+        }
         <CourseContainer 
           userInfo={this.state}
           createEnrollment={this.createEnrollment}
