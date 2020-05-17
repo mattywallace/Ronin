@@ -15,6 +15,7 @@ export default class App extends Component {
       loggedIn: false, 
       loggedInUserEmail: "",
       loggedInUserId: "",
+      loggedInUserIsAdmin: false,
       enrollments:[]
     }
   }
@@ -38,7 +39,8 @@ export default class App extends Component {
         this.setState({
           loggedIn: true,
           loggedInUserEmail: registerJson.data.email,
-          loggedInUserId: registerJson.data.id
+          loggedInUserId: registerJson.data.id,
+          loggedInUserAdmin:registerJson.data.is_admin
         })
       }
     } catch (error) {
@@ -66,7 +68,9 @@ export default class App extends Component {
         this.setState({
           loggedIn: true,
           loggedInUserEmail: loginJson.data.email,
-          loggedInUserId: loginJson.data.id
+          loggedInUserId: loginJson.data.id,
+          loggedInUserIsAdmin:loginJson.data.is_admin
+
         })
       }
       console.log("here is what is currently in state");

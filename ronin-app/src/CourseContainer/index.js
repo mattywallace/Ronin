@@ -122,20 +122,26 @@ export default class courseContainer extends Component {
 	}
 	
 	render() {
-		console.log("here is the this.state in render() in user container");
+		console.log("here is the this.state in render() in course container");
 		console.log(this.state);
+		console.log(this.props.userInfo);
 		return(
 			<React.Fragment>
 				<h2>Courses Container</h2>
-				<CreateCourseForm 
-					userInfo={this.props.userInfo}
-					createCourse={this.createCourse}/>
-				<CourseList 
-					courses={this.state.courses} 
-					deleteCourse={this.deleteCourse}
-					editCourse={this.editCourse}
-					createEnrollment={this.props.createEnrollment}
-				/>
+				
+				{ this.props.userInfo.loggedInUserIsAdmin === true
+					&&
+					<CreateCourseForm 
+						userInfo={this.props.userInfo}
+						createCourse={this.createCourse}/>
+				}
+
+					<CourseList 
+						courses={this.state.courses} 
+						deleteCourse={this.deleteCourse}
+						editCourse={this.editCourse}
+						createEnrollment={this.props.createEnrollment}
+					/>
 			
 				{ this.state.idOfCourseToEdit !== -1 
 					&& 

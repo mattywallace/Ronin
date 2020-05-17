@@ -6,6 +6,5 @@ export default function Header(props) {
 		<nav>
 			<p className='fake-link' onClick={props.logout}>Log Out</p>
 		</nav>
-
 	)
 }
