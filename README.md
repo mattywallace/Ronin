@@ -5,6 +5,9 @@ Instructors or admins create courses using Ronins flexible milestone feature tha
 students to easily show comptetnce and complience with course requirements. 
 Get ready to sharpen your skills. 
 
+FRONT END: https://roninapp.herokuapp.com/
+BACK END: https://ronin-api.herokuapp.com/
+
 +++++++++++ USER STORIES +++++++++++
 
 
