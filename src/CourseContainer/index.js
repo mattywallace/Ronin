@@ -127,7 +127,6 @@ export default class courseContainer extends Component {
 		console.log(this.props.userInfo);
 		return(
 			<React.Fragment>
-				<h2>Courses Container</h2>
 				
 				{ this.props.userInfo.loggedInUserIsAdmin === true
 					&&
