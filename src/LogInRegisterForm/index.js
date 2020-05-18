@@ -45,7 +45,7 @@ export default class LogInRegisterForm extends Component {
 	render () {
 		return (
 			<React.Fragment>
-				<h2> User {this.state.action}</h2>
+				<h2> Ronin {this.state.action}</h2>
 				<Form onSubmit={this.handleSubmit}>
 				{ 
 					this.state.action === "Register"

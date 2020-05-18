@@ -7,6 +7,53 @@ Get ready to sharpen your skills.
 
 +++++++++++ USER STORIES +++++++++++
 
+
++++++ Technologies +++++
+React
+Flask
+Peewees playhouse 
+React 
+JSX
+Heroku
+Git
+GitHub
+
+
++++++ Installation Steps +++++
+
+
+If you wish to contribute to Ronin follow these simple steps:
+
+Make two new directories name one Api and the other React
+
+clone each of these links in their respective directories.
+
+REACT SIDE 
+git clone https://github.com/mattywallace/Ronin.git
+
+Flask Side 
+git clone https://github.com/mattywallace/RoninApi.git
+
+In the React directory you can now run npm start in you terminal, you should be good to go on the front end if you use your local server. 
+
+You need to set up envirnemnt varibales to run the python code however...
+
+in you terminal run the command 
+
+virtualenv .env -p python3
+
+----this creates a directory called .env 
+
+run the command 
+
+source .env/bin/activate 
+
+now run python app.py and you should be good to go. Just make sure you remember to 
+.gitignore the .env file but typing .env inside the .gitignore. 
+
+
+
+
 -----Basic User Fuctionality-----
 
 A user registers an account and is brought to their portal page.
