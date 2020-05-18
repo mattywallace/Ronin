@@ -15,7 +15,7 @@ export default class App extends Component {
       loggedIn: false, 
       loggedInUserEmail: "",
       loggedInUserId: "",
-      loggedInUserIsAdmin: false,
+      loggedInUserIsAdmin: null,
       enrollments:[]
     }
   }
@@ -35,12 +35,12 @@ export default class App extends Component {
       console.log('registerResponse', registerResponse);
       const registerJson = await registerResponse.json()
       console.log("registerJson", registerJson);
-      if(registerResponse.status === 201) {
+      if(registerResponse.status === 200) {
         this.setState({
           loggedIn: true,
           loggedInUserEmail: registerJson.data.email,
           loggedInUserId: registerJson.data.id,
-          loggedInUserAdmin:registerJson.data.is_admin
+          loggedInUserAdmin: registerJson.data.is_admin
         })
       }
     } catch (error) {

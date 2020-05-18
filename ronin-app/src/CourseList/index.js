@@ -35,7 +35,7 @@ export default function CourseList(props) {
 						Enroll
 					</Button> 
 				{
-					props.userInfo.loggedInUserIsAdmmin === true
+					props.userInfo.loggedInUserIsAdmin === true
 					&&
 					<React.Fragment>
 						<Button 

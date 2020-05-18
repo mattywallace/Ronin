@@ -40,6 +40,7 @@ export default class CreateCourseForm extends Component {
 
 	render() {
 		console.log(this.state);
+		console.log('THIS IS THE STATE IN CREATE COURSE FORM');
 		return (
 			<React.Fragment>
 				<h2>Course Creator</h2>
