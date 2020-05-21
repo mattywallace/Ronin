@@ -1,18 +1,77 @@
 import React, { Component } from 'react'
+import EnrollmentContainer from '../EnrollmentContainer'
+import CourseContainer from '../CourseContainer'
+
+
 
 
 export default class UserContainer extends Component {
-	constructor() {
-		super()
+	constructor(props) {
+		super(props)
 		this.state = {
-			users: []
+			users: [],
+			enrollments: [],	
+
 		}
 	}
 
 	componentDidMount() {
 		this.getUsers()
+		this.getEnrollments()
 	}
 
+	getEnrollments = async () => {
+   		try {
+	      const url = process.env.REACT_APP_API_URL + "/api/v1/enrollments/" + this.props.state.loggedInUserId
+	      const enrollmentsResponse = await fetch(url, {
+	        credentials:'include',
+	        headers: {
+	          'Content-Type': 'application/json'
+	        }
+	      })
+	      const enrollmentsJson = await enrollmentsResponse.json()
+	      console.log('this is enrollmentsJson', enrollmentsJson);
+	      console.log('this is enrollmentsResponse', enrollmentsResponse);
+	      this.setState({
+	        enrollments: enrollmentsJson.data
+	      })
+	    } catch (error) {
+	      console.log('Error getting enrollments data');
+	      console.error(error)
+	    }
+	}
+
+	createEnrollment = async (enrollmentToAdd) => {
+	    console.log('Props from APP');
+	    console.log('HERE IS THE COURSE ID IN ENROLLMENTS');
+	    console.log(enrollmentToAdd);
+	    try {
+	      const url = process.env.REACT_APP_API_URL  + "/api/v1/enrollments/" + enrollmentToAdd + '/' + this.props.state.loggedInUserId
+	      const createdEnrollmentResponse = await fetch(url, {
+	        method: 'POST',
+	        credentials:'include',
+	        body: JSON.stringify(enrollmentToAdd),
+	        headers: {
+	          'Content-Type':'application/json'
+	        }
+	      })
+	      console.log('createdEnrollmentResponse', createdEnrollmentResponse);
+	      const createdEnrollmentJson = await createdEnrollmentResponse.json()
+	      console.log("here is what we get when we try to enroll in a course");
+	      console.log(createdEnrollmentJson);
+	      if (createdEnrollmentResponse.status === 201 ) {
+	        this.setState({
+	          enrollments:[...this.state.enrollments, createdEnrollmentJson.data]
+	        })
+	      }
+	      console.log('HERE IS THE STATE OF ENROLLMENTS IN APP.JS');
+	      console.log(this.state.enrollments)
+	    } catch (error) {
+	      console.error('error enrolling in course');
+	      console.error(error)
+	   }
+
+	}
 	getUsers = async () => {
 		try {
 			const url = process.env.REACT_APP_API_URL + "/api/v1/users/"
@@ -32,7 +91,14 @@ export default class UserContainer extends Component {
 		console.log(this.state);
 		return(
 			<React.Fragment>
-				<h2>User Contianer</h2>
+				<EnrollmentContainer 
+					enrollments={this.state.enrollments}
+					/>
+				<CourseContainer 
+					createEnrollment={this.createEnrollment} 
+					userInfo={this.props} />
+				
+
 			</React.Fragment>
 		)
 	}

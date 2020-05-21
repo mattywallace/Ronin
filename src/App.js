@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import './App.css';
-import CourseContainer from './CourseContainer'
+
 import LogInRegisterForm from './LogInRegisterForm'
-import EnrollmentContainer from './EnrollmentContainer'
+import UserContainer from './UserContainer'
 import Header from './Header'
 
 
@@ -18,9 +18,10 @@ export default class App extends Component {
       loggedInUserEmail: "",
       loggedInUserId: "",
       loggedInUserIsAdmin: null,
-      enrollments:[]
+ 
     }
   }
+
   
   register = async (registerInfo) => {
     console.log("register() in app. js called with the following info", registerInfo);
@@ -34,6 +35,7 @@ export default class App extends Component {
           'Content-Type': 'application/json'
         }
       })
+
       console.log('registerResponse', registerResponse);
       const registerJson = await registerResponse.json()
       console.log("registerJson", registerJson);
@@ -48,8 +50,8 @@ export default class App extends Component {
     } catch (error) {
       console.error('Error trying to register with API');
       console.error(error)
+    }
   }
-}
 
   login = async (loginInfo) => {
     const url = process.env.REACT_APP_API_URL + '/api/v1/users/login'
@@ -83,6 +85,7 @@ export default class App extends Component {
     }
   }
 
+
   logout = async () => {
     try {
       const url = process.env.REACT_APP_API_URL  + '/api/v1/users/logout'
@@ -107,63 +110,6 @@ export default class App extends Component {
     
   }
 
-  componentDidMount() {
-    this.getEnrollments()
-  }
-
-  getEnrollments = async () => {
-    try {
-      const url = process.env.REACT_APP_API_URL + "/api/v1/enrollments/"
-      const enrollmentsResponse = await fetch(url, {
-        credentials:'include',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      const enrollmentsJson = await enrollmentsResponse.json()
-      console.log('this is enrollmentsJson', enrollmentsJson);
-      console.log('this is enrollmentsResponse', enrollmentsResponse);
-      this.setState({
-        enrollments: enrollmentsJson.data
-      })
-    } catch (error) {
-      console.log('Error getting enrollments data');
-      console.error(error)
-    }
-  }
-
-  createEnrollment = async (courseId) => {
-    console.log('Props from APP');
-    console.log('HERE IS THE COURSE ID IN ENROLLMENTS');
-    console.log(courseId);
-    try {
-      const url = process.env.REACT_APP_API_URL  + "/api/v1/enrollments/" + courseId + '/' + this.state.loggedInUserId
-      const createdEnrollmentResponse = await fetch(url, {
-        method: 'POST',
-        credentials:'include',
-        body: JSON.stringify(courseId),
-        headers: {
-          'Content-Type':'application/json'
-        }
-      })
-      console.log('createdEnrollmentResponse', createdEnrollmentResponse);
-      const createdEnrollmentJson = await createdEnrollmentResponse.json()
-      console.log("here is what we get when we try to enroll in a course");
-      console.log(createdEnrollmentJson);
-      if (createdEnrollmentResponse.status === 201 ) {
-        this.setState({
-          enrollments:[...this.state.enrollments, createdEnrollmentJson.data]
-        })
-      }
-      console.log('HERE IS THE STATE OF ENROLLMENTS IN APP.JS');
-      console.log(this.state.enrollments)
-    } catch (error) {
-      console.error('error enrolling in course');
-      console.error(error)
-    }
-    
-  }
-
   render () {
   return (
    <div className="App">
@@ -174,18 +120,11 @@ export default class App extends Component {
       <Header 
         logout={this.logout} 
         email={this.state.loggedInUserEmail} />
-      
-        <CourseContainer 
-          userInfo={this.state}
-          createEnrollment={this.createEnrollment}
-          />
+        
+        <UserContainer userInfo={this.state.loggedInUserId} state={this.state}/>
 
-        <EnrollmentContainer 
-          userInfo={this.state}
-          enrollments={this.state.enrollments}
-          createEnrollment={this.createEnrollment}
-          getEnrollments={this.getEnrollments}
-          />
+
+      }
 
       </React.Fragment>
       :

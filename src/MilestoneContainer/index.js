@@ -63,7 +63,6 @@ export default class MilestoneContainer extends Component {
 			console.error("Error adding milestone");
 			console.error(error)
 		}
-		
 	}
 
 	render() {

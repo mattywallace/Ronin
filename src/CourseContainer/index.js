@@ -4,13 +4,13 @@ import CreateCourseForm from '../CreateCourseForm'
 import EditCourseModal from '../EditCourseModal'
 import MilestoneContainer from '../MilestoneContainer'
 
+
 export default class courseContainer extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			courses: [],
-			idOfCourseToEdit: -1,			
-
+			idOfCourseToEdit: -1,					
 		}
 	}
 
@@ -143,15 +143,17 @@ export default class courseContainer extends Component {
 						userInfo={this.props.userInfo}
 						createCourse={this.createCourse}/>
 				}
-
+					<h2>Course Catalougue</h2>
 					<CourseList 
 						courses={this.state.courses} 
-						createMilestone={this.createMilestone}
 						userInfo={this.props.userInfo}
 						deleteCourse={this.deleteCourse}
 						editCourse={this.editCourse}
+						enrollments={this.state.enrollments}
 						createEnrollment={this.props.createEnrollment}	
 					/>
+
+					
 
 				{ this.state.idOfCourseToEdit !== -1 
 					&& 
@@ -162,7 +164,7 @@ export default class courseContainer extends Component {
 						updateCourse={this.updateCourse}
 						closeModal={this.closeModal}
 						/>
-					<MilestoneContainer state={this.state} />
+					<MilestoneContainer state={this.state}/>
 				</React.Fragment>
 				}
 
