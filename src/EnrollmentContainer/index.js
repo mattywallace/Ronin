@@ -13,6 +13,7 @@ export default function EnrollmentContainer(props) {
 				<EnrollmentList 
 					deleteEnrollment={props.deleteEnrollment}
 					enrollments={props.enrollments} 
+					courses={props.courses}
 				/>
 			</React.Fragment>
 		)

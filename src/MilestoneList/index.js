@@ -15,7 +15,7 @@ export default function MilestoneList(props) {
 					<Card.Description>
 						{milestone.resources}
 					</Card.Description>
-					<Button>
+					<Button onClick={ () => props.editMilestone(milestone.id)} >
 						view
 					</Button>
 				</Card.Content>

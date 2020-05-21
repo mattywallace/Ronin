@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import MilestoneList from '../MilestoneList'
 import CreateMilestoneForm from '../CreateMilestoneForm'
+import EditMilestoneModal from '../EditMilestoneModal'
 
 export default class MilestoneContainer extends Component {
 	constructor(props) {
@@ -24,9 +25,7 @@ export default class MilestoneContainer extends Component {
 			const milestonesResponse = await fetch(url, {
 				credentials: 'include'
 			})
-			console.log('this is  MILESTONESresponse', milestonesResponse);
 			const milestonesJson = await milestonesResponse.json()
-			console.log('this is MILESTONES json' , milestonesJson);
 			this.setState({
 				milestones: milestonesJson.data
 			})
@@ -48,33 +47,77 @@ export default class MilestoneContainer extends Component {
 					'Content-Type':'application/json'
 				}
 			})
-			console.log("createdMilsetoneResponse", createdMilestoneResponse);
 			const createMilestoneJson = await createdMilestoneResponse.json()
-			console.log('here is what we got back after trying to add a MILESTONE');
-			console.log(createMilestoneJson);
 			if (createdMilestoneResponse.status === 200 ){
 				this.setState({
 					milestones:[...this.state.milestones, createMilestoneJson.data]
 				})
 			}
-			console.log('THIS IS A STATE CHECK AFTER ADDING MILESTONES');
-			console.log(this.state.milestones);
 		} catch (error) {
 			console.error("Error adding milestone");
 			console.error(error)
 		}
 	}
 
-	render() {
-		console.log(' here is the state in render in Milestone Container');
-		console.log(this.state);
-		return (
 
+	editMilestone = (idOfMilestoneToEdit) => {
+		console.log('you are tyring to edit this milestone', idOfMilestoneToEdit);
+			this.setState({
+				idOfMilestoneToEdit: idOfMilestoneToEdit
+			})
+	}
+
+	updateMilestone = async (updatedMilestoneInfo) => {
+		const url = process.env.REACT_APP_API_URL + '/api/v1/milestones/' + this.props.state.idOfCourseToEdit + '/' + this.state.idOfMilestoneToEdit
+		console.log('THIS IS THE UPDATED MILESTONE INFO', updatedMilestoneInfo);
+		try {
+			const updatedMilestoneResponse = await fetch(url, {
+				credentials:'include',
+				method: 'PUT',
+				body:JSON.stringify(updatedMilestoneInfo),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+			
+			const updatedMilestoneJson = await updatedMilestoneResponse.json()
+			console.log(updatedMilestoneJson);
+			this.setState({idOfMilestoneToEdit: - 1})
+			this.getMilestones()
+		} catch (error) {
+			console.error("Error updating Milestone Info");
+			console.error(error)
+		}
+	}
+
+	closeModal =() => {
+		this.setState({
+			idOfMilestoneToEdit: -1
+		})
+	}
+	
+	render() {
+		return (
 			<React.Fragment>
 				<CreateMilestoneForm 
 					createMilestone={this.createMilestone} />
 				<MilestoneList 
-					milestones={this.state.milestones} />
+					milestones={this.state.milestones} 
+					updateMilestone={this.updateMilestone}
+					editMilestone={this.editMilestone}
+					deleteMilestone={this.deleteMilestone} 
+				/>
+			{
+				this.state.idOfMilestoneToEdit !== -1 
+				&&
+				<EditMilestoneModal 
+					key={this.state.idOfMilestoneToEdit}
+					milestoneToEdit={this.state.milestones.find((milestone) => milestone.id === this.state.idOfMilestoneToEdit)}
+					updateMilestone={this.updateMilestone}
+					closeModal={this.closeModal}
+				/>
+
+			}
 			</React.Fragment>
 		)
 	}

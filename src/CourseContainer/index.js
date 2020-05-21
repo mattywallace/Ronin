@@ -233,9 +233,6 @@ export default class courseContainer extends Component {
 					</React.Fragment>
 				}
 					
-				
-
-				
 					<h2>Course Catalougue</h2>
 					<CourseList 
 						courses={this.state.courses} 
@@ -255,7 +252,7 @@ export default class courseContainer extends Component {
 						courseToEdit={this.state.courses.find((course) => course.id === this.state.idOfCourseToEdit)}
 						updateCourse={this.updateCourse}
 						closeModal={this.closeModal}
-						/>
+					/>
 					<MilestoneContainer state={this.state}/>
 				</React.Fragment>
 				}
