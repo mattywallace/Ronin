@@ -72,6 +72,30 @@ export default class UserContainer extends Component {
 	   }
 
 	}
+
+	deleteEnrollment = async (idOfEnrollmentToDelete) => {
+		console.log('delete enrollment');
+		const url = process.env.REACT_APP_API_URL + "/api/v1/enrollments/" + idOfEnrollmentToDelete
+		try {
+			const deleteEnrollmentResponse = await fetch(url, {
+				credentials: "include",
+				method: "DELETE"
+			})
+			console.log("deleteEnrollmentResponse", deleteEnrollmentResponse);
+			const deleteEnrollmentJson = await deleteEnrollmentResponse.json()
+			console.log("deleteEnrollmentJson", deleteEnrollmentJson);
+			if (deleteEnrollmentResponse.status === 200) {
+				this.setState({
+				courses: this.state.enrollments.filter(enrollment => enrollment.id !== idOfEnrollmentToDelete)
+				})
+			}	
+		} catch (error) {
+			console.error('Error deleting enrollment');
+			console.error(error)
+		}
+	}
+
+
 	getUsers = async () => {
 		try {
 			const url = process.env.REACT_APP_API_URL + "/api/v1/users/"
@@ -93,9 +117,10 @@ export default class UserContainer extends Component {
 			<React.Fragment>
 				<EnrollmentContainer 
 					enrollments={this.state.enrollments}
+					deleteEnrollment={this.deleteEnrollment} 
 					/>
 				<CourseContainer 
-					createEnrollment={this.createEnrollment} 
+					createEnrollment={this.createEnrollment}
 					userInfo={this.props} />
 				
 
