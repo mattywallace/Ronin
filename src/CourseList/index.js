@@ -19,7 +19,7 @@ export default function CourseList(props) {
 						Instructor: {course.administrator.username}	
 					</Card.Meta>
 					<Card.Meta>
-						Milestones: {course.milestones}
+						Milestones: {course.milestones.length}
 					</Card.Meta>	
 					{
 						course.certification === true 
