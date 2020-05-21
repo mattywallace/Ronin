@@ -123,7 +123,7 @@ export default class App extends Component {
         <UserContainer userId={this.state.loggedInUserId} userAdmin={this.state.loggedInUserIsAdmin}/>
 
 
-      }
+      
     
 
       </React.Fragment>

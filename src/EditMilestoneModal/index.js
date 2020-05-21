@@ -46,7 +46,7 @@ export default class CreateMilestoneForm extends Component {
 							onChange={this.handleChange}
 						/>
 						<Button className='positive ui button' type='Submit'>
-							Create Milestone
+							Submit 
 						</Button>
 					</Form>
 				</React.Fragment>

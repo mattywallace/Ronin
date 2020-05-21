@@ -90,6 +90,27 @@ export default class MilestoneContainer extends Component {
 		}
 	}
 
+	deleteMilestone = async (idOfMilestoneToDelete) => {
+		const url = process.env.REACT_APP_API_URL + "/api/v1/milestones/" + this.props.state.idOfCourseToEdit + '/' + idOfMilestoneToDelete
+		try {
+			const deleteMilestoneResponse = await fetch(url, {
+				credentials: "include",
+				method: "DELETE"
+			})
+			console.log("deleteMilestoneResponse", deleteMilestoneResponse);
+			const deleteMilestoneJson = await deleteMilestoneResponse.json()
+			console.log("deleteMilestoneJson", deleteMilestoneJson);
+			if (deleteMilestoneResponse.status === 200) {
+				this.setState({
+				milestones: this.state.milestones.filter(milestone => milestone.id !== idOfMilestoneToDelete)
+				})
+			}	
+		} catch (error) {
+			console.error('Error deleting milestone');
+			console.error(error)
+		}
+	}
+
 	closeModal =() => {
 		this.setState({
 			idOfMilestoneToEdit: -1
