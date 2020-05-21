@@ -221,14 +221,21 @@ export default class courseContainer extends Component {
 						userInfo={this.props.userInfo}
 						createCourse={this.createCourse}/>
 				}
-					<h2>Current Enrollments</h2>
+				{ this.state.enrollments.length > 0
+					&&
+					<React.Fragment>
+						<h2>Current Enrollments</h2>
+						<EnrollmentContainer 
+							enrollments={this.state.enrollments}
+							deleteEnrollment={this.deleteEnrollment}
+							courses={this.state.courses}
+						/>
+					</React.Fragment>
+				}
 					
-					<EnrollmentContainer 
-						enrollments={this.state.enrollments}
-						deleteEnrollment={this.deleteEnrollment}
-						courses={this.state.courses}
-					/>
-					
+				
+
+				
 					<h2>Course Catalougue</h2>
 					<CourseList 
 						courses={this.state.courses} 
