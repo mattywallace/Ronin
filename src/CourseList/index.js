@@ -4,6 +4,7 @@ import { Card, Button } from 'semantic-ui-react'
 
 
 
+
 export default function CourseList(props) {
 	console.log("props in courselidst");
 	console.log(props);
@@ -17,7 +18,9 @@ export default function CourseList(props) {
 					<Card.Meta>
 						Instructor: {course.administrator.username}	
 					</Card.Meta>
-					
+					<Card.Meta>
+						Milestones: {course.milestones}
+					</Card.Meta>	
 					{
 						course.certification === true 
 						&&
@@ -35,7 +38,7 @@ export default function CourseList(props) {
 						Enroll
 					</Button> 
 				{
-					props.userInfo.loggedInUserIsAdmin === true
+					props.userInfo.loggedInUserId === course.administrator.id
 					&&
 					<React.Fragment>
 						<Button 

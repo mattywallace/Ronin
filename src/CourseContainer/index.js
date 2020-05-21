@@ -2,19 +2,21 @@ import React, { Component } from 'react'
 import CourseList from '../CourseList'
 import CreateCourseForm from '../CreateCourseForm'
 import EditCourseModal from '../EditCourseModal'
-import EnrollmentContainer from '../EnrollmentContainer'
+import MilestoneContainer from '../MilestoneContainer'
 
 export default class courseContainer extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			courses: [],
-			idOfCourseToEdit: -1
+			idOfCourseToEdit: -1,			
+
 		}
 	}
 
 	componentDidMount() {
 		this.getCourses()
+		
 	}
 
 	getCourses = async () => {
@@ -47,9 +49,9 @@ export default class courseContainer extends Component {
 			console.log("deleteCoruseResponse", deleteCourseResponse);
 			const deleteCourseJson = await deleteCourseResponse.json()
 			console.log("deleteCourseJson", deleteCourseJson);
-			if (deleteCourseResponse.status == 200) {
+			if (deleteCourseResponse.status === 200) {
 				this.setState({
-				courses: this.state.courses.filter(course => course.id != idOfCourseToDelete)
+				courses: this.state.courses.filter(course => course.id !== idOfCourseToDelete)
 				})
 			}	
 		} catch (error) {
@@ -120,6 +122,13 @@ export default class courseContainer extends Component {
 			console.error(error)
 		}
 	}
+
+
+		closeModal = () => {
+			this.setState({
+				idOfCourseToEdit: -1
+		})
+	}
 	
 	render() {
 		console.log("here is the this.state in render() in course container");
@@ -137,18 +146,26 @@ export default class courseContainer extends Component {
 
 					<CourseList 
 						courses={this.state.courses} 
+						createMilestone={this.createMilestone}
 						userInfo={this.props.userInfo}
 						deleteCourse={this.deleteCourse}
 						editCourse={this.editCourse}
-						createEnrollment={this.props.createEnrollment}
+						createEnrollment={this.props.createEnrollment}	
 					/>
-			
+
 				{ this.state.idOfCourseToEdit !== -1 
 					&& 
+				<React.Fragment>
 					<EditCourseModal 
+						key={this.state.idOfCourseToEdit}
 						courseToEdit={this.state.courses.find((course) => course.id === this.state.idOfCourseToEdit)}
 						updateCourse={this.updateCourse}
-						/>}
+						closeModal={this.closeModal}
+						/>
+					<MilestoneContainer state={this.state} />
+				</React.Fragment>
+				}
+
 			</React.Fragment>
 		)
 	}

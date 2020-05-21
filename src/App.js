@@ -9,6 +9,8 @@ import Header from './Header'
 export default class App extends Component {
   
   constructor() {
+    console.log('THIS IS PROCESS ENV');
+    console.log(process.env);
     super()
 
     this.state = {
@@ -22,7 +24,7 @@ export default class App extends Component {
   
   register = async (registerInfo) => {
     console.log("register() in app. js called with the following info", registerInfo);
-    const url = process.env.REACT_APP_API_URL + '/api/v1/users/register'
+    const url = process.env.REACT_APP_API_URL + "/api/v1/users/register"
     try {
       const registerResponse = await fetch(url, {
         credentials: 'include',
@@ -35,7 +37,7 @@ export default class App extends Component {
       console.log('registerResponse', registerResponse);
       const registerJson = await registerResponse.json()
       console.log("registerJson", registerJson);
-      if(registerResponse.status === 200) {
+      if(registerResponse.status === 201) {
         this.setState({
           loggedIn: true,
           loggedInUserEmail: registerJson.data.email,
@@ -83,7 +85,7 @@ export default class App extends Component {
 
   logout = async () => {
     try {
-      const url = process.env.REACT_APP_API_URL + '/api/v1/users/logout'
+      const url = process.env.REACT_APP_API_URL  + '/api/v1/users/logout'
       const logoutResponse = await fetch(url, {
         credentials:'include'
       })
@@ -111,7 +113,7 @@ export default class App extends Component {
 
   getEnrollments = async () => {
     try {
-      const url = process.env.REACT_APP_API_URL +"/api/v1/enrollments/"
+      const url = process.env.REACT_APP_API_URL + "/api/v1/enrollments/"
       const enrollmentsResponse = await fetch(url, {
         credentials:'include',
         headers: {
@@ -135,7 +137,7 @@ export default class App extends Component {
     console.log('HERE IS THE COURSE ID IN ENROLLMENTS');
     console.log(courseId);
     try {
-      const url = process.env.REACT_APP_API_URL + "/api/v1/enrollments/" + courseId + '/' + this.state.loggedInUserId
+      const url = process.env.REACT_APP_API_URL  + "/api/v1/enrollments/" + courseId + '/' + this.state.loggedInUserId
       const createdEnrollmentResponse = await fetch(url, {
         method: 'POST',
         credentials:'include',
@@ -171,13 +173,13 @@ export default class App extends Component {
       <React.Fragment>
       <Header 
         logout={this.logout} 
-        email={this.state.loggedInUserEmail} 
-        />
-        }
+        email={this.state.loggedInUserEmail} />
+      
         <CourseContainer 
           userInfo={this.state}
           createEnrollment={this.createEnrollment}
           />
+
         <EnrollmentContainer 
           userInfo={this.state}
           enrollments={this.state.enrollments}

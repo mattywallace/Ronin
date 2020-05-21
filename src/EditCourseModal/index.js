@@ -4,10 +4,13 @@ import { Form, Button, Label, Segment } from 'semantic-ui-react'
 export default class EditCourseModal extends Component {
 	constructor(props) {
 		super (props)
+		console.log('HERE ARE THE PROPS IN EDITCOURSEMODAL');
+		console.log(this.props);
 		this.state = {
 			course_name: props.courseToEdit.course_name,
 			description: props.courseToEdit.description,
-			certification: props.courseToEdit.certification
+			certification: props.courseToEdit.certification,
+			milestones:[]
 		}
 	}
 		

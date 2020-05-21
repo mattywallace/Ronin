@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-
 import EnrollmentList from '../EnrollmentList'
 
 
@@ -9,36 +8,35 @@ export default class EnrollmentContainer extends Component {
 		console.log(props, 'being passed in the enrollmentContainer');
 		
 	}
-	deleteEnrollment = () => {
-			console.log('delete enrollment');
-			// const url = process.env.REACT_APP_API_URL + "/api/v1/enrollments/" + idOfEnrollmentToDelete
-			// try {
-			// 	const deleteEnrollmentResponse = await fetch(url, {
-			// 		credentials: "include",
-			// 		method: "DELETE"
-			// 	})
-			// 	console.log("deleteEnrollmentResponse", deleteEnrollmentResponse);
-			// 	const deleteEnrollmentJson = await deleteEnrollmentResponse.json()
-			// 	console.log("deleteEnrollmentJson", deleteEnrollmentJson);
-			// 	if (deleteEnrollmentResponse.status == 200) {
-			// 		this.setState({
-			// 		courses: this.state.enrollments.filter(enrollment => enrollment.id != idOfEnrollmentToDelete)
-			// 		})
-			// 	}	
-			// } catch (error) {
-			// 	console.error('Error deleting enrollment');
-			// 	console.error(error)
-			// }
-		}
-
 	
-			
+	deleteEnrollment = async (idOfEnrollmentToDelete) => {
+			console.log('delete enrollment');
+			const url = process.env.REACT_APP_API_URL + "/api/v1/enrollments/" + idOfEnrollmentToDelete
+			try {
+				const deleteEnrollmentResponse = await fetch(url, {
+					credentials: "include",
+					method: "DELETE"
+				})
+				console.log("deleteEnrollmentResponse", deleteEnrollmentResponse);
+				const deleteEnrollmentJson = await deleteEnrollmentResponse.json()
+				console.log("deleteEnrollmentJson", deleteEnrollmentJson);
+				if (deleteEnrollmentResponse.status === 200) {
+					this.setState({
+					courses: this.props.enrollments.filter(enrollment => enrollment.id !== idOfEnrollmentToDelete)
+					})
+				}	
+			} catch (error) {
+				console.error('Error deleting enrollment');
+				console.error(error)
+			}
+		}
+	
 	render() {
 		return (
 			<React.Fragment>
 				<EnrollmentList 
-					deleteEnrollement={this.deleteEnrollment}
-					enrollments={this.props.enrollments}/>
+					deleteEnrollment={this.deleteEnrollment}
+					enrollments={this.props.enrollments} />
 			
 			</React.Fragment>
 
