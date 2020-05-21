@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, Button } from 'semantic-ui-react'
- 
+
 
 
 
@@ -14,8 +14,11 @@ export default function EnrollmentList(props) {
 					<Card.Header>
 						{enrollment.enrolled_course.course_name}
 					</Card.Header>
+					<Card.Description>
+
+					</Card.Description>
 					<Button className='negative mini ui button' onClick={() => props.deleteEnrollment(enrollment.id) }>
-						Cancell Enrollment
+						Cancel Enrollment
 					</Button>
 					<Button>
 						view

@@ -38,7 +38,7 @@ export default function CourseList(props) {
 						Enroll
 					</Button> 
 				{
-					props.userInfo.loggedInUserId === course.administrator.id
+					props.userInfo === course.administrator.id
 					&&
 					<React.Fragment>
 						<Button 

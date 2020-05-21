@@ -5,7 +5,7 @@ export default class CreateCourseForm extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			adminstrator: this.props.userInfo.loggedInUserId,
+			adminstrator: this.props.userId,
 			course_name:'',
 			description:'',
 			certification: false,

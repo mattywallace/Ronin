@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import './App.css';
-
 import LogInRegisterForm from './LogInRegisterForm'
 import UserContainer from './UserContainer'
 import Header from './Header'
@@ -121,10 +120,11 @@ export default class App extends Component {
         logout={this.logout} 
         email={this.state.loggedInUserEmail} />
         
-        <UserContainer userInfo={this.state.loggedInUserId} state={this.state}/>
+        <UserContainer userId={this.state.loggedInUserId} userAdmin={this.state.loggedInUserIsAdmin}/>
 
 
       }
+    
 
       </React.Fragment>
       :

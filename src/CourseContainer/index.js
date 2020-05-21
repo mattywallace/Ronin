@@ -3,6 +3,7 @@ import CourseList from '../CourseList'
 import CreateCourseForm from '../CreateCourseForm'
 import EditCourseModal from '../EditCourseModal'
 import MilestoneContainer from '../MilestoneContainer'
+import EnrollmentContainer from'../EnrollmentContainer'
 
 
 export default class courseContainer extends Component {
@@ -10,13 +11,90 @@ export default class courseContainer extends Component {
 		super(props)
 		this.state = {
 			courses: [],
+			enrollments: [],
 			idOfCourseToEdit: -1,					
 		}
 	}
 
 	componentDidMount() {
 		this.getCourses()
+		this.getEnrollments()
 		
+	}
+
+	getEnrollments = async () => {
+   		try {
+	      const url = process.env.REACT_APP_API_URL + "/api/v1/enrollments/" + this.props.userInfo
+	      const enrollmentsResponse = await fetch(url, {
+	        credentials:'include',
+	        headers: {
+	          'Content-Type': 'application/json'
+	        }
+	      })
+	      const enrollmentsJson = await enrollmentsResponse.json()
+	      console.log('this is enrollmentsJson', enrollmentsJson);
+	      console.log('this is enrollmentsResponse', enrollmentsResponse);
+	      this.setState({
+	        enrollments: enrollmentsJson.data
+	      })
+	    } catch (error) {
+	      console.log('Error getting enrollments data');
+	      console.error(error)
+	    }
+	}
+
+	createEnrollment = async (enrollmentToAdd) => {
+	    console.log('Props from APP');
+	    console.log('HERE IS THE COURSE ID IN ENROLLMENTS');
+	    console.log(enrollmentToAdd);
+	    try {
+	      const url = process.env.REACT_APP_API_URL  + "/api/v1/enrollments/" + enrollmentToAdd + '/' + this.props.userInfo
+	      const createdEnrollmentResponse = await fetch(url, {
+	        method: 'POST',
+	        credentials:'include',
+	        body: JSON.stringify(enrollmentToAdd),
+	        headers: {
+	          'Content-Type':'application/json'
+	        }
+	      })
+	      console.log('createdEnrollmentResponse', createdEnrollmentResponse);
+	      const createdEnrollmentJson = await createdEnrollmentResponse.json()
+	      console.log("here is what we get when we try to enroll in a course");
+	      console.log(createdEnrollmentJson);
+	      if (createdEnrollmentResponse.status === 201 ) {
+	        this.setState({
+	          enrollments:[...this.state.enrollments, createdEnrollmentJson.data]
+	        })
+	      }
+	      console.log('HERE IS THE STATE OF ENROLLMENTS IN APP.JS');
+	      console.log(this.state.enrollments)
+	    } catch (error) {
+	      console.error('error enrolling in course');
+	      console.error(error)
+	   }
+
+	}
+
+	deleteEnrollment = async (idOfEnrollmentToDelete) => {
+		console.log('delete enrollment');
+		const url = process.env.REACT_APP_API_URL + "/api/v1/enrollments/" + idOfEnrollmentToDelete
+		try {
+			const deleteEnrollmentResponse = await fetch(url, {
+				credentials: "include",
+				method: "DELETE"
+			})
+			console.log("deleteEnrollmentResponse", deleteEnrollmentResponse);
+			const deleteEnrollmentJson = await deleteEnrollmentResponse.json()
+			console.log("deleteEnrollmentJson", deleteEnrollmentJson);
+			if (deleteEnrollmentResponse.status === 200) {
+				this.setState({
+					enrollments: this.state.enrollments.filter(enrollment => enrollment.id !== idOfEnrollmentToDelete)
+				})
+			}	
+		} catch (error) {
+			console.error('Error deleting enrollment');
+			console.error(error)
+		}
 	}
 
 	getCourses = async () => {
@@ -133,16 +211,24 @@ export default class courseContainer extends Component {
 	render() {
 		console.log("here is the this.state in render() in course container");
 		console.log(this.state);
-		console.log(this.props.userInfo);
+		console.log(this.props.userAdmin);
 		return(
 			<React.Fragment>
 				
-				{ this.props.userInfo.loggedInUserIsAdmin === true
+				{ this.props.userAdmin === true
 					&&
 					<CreateCourseForm 
 						userInfo={this.props.userInfo}
 						createCourse={this.createCourse}/>
 				}
+					<h2>Current Enrollments</h2>
+					
+					<EnrollmentContainer 
+						enrollments={this.state.enrollments}
+						deleteEnrollment={this.deleteEnrollment}
+						courses={this.state.courses}
+					/>
+					
 					<h2>Course Catalougue</h2>
 					<CourseList 
 						courses={this.state.courses} 
@@ -150,10 +236,9 @@ export default class courseContainer extends Component {
 						deleteCourse={this.deleteCourse}
 						editCourse={this.editCourse}
 						enrollments={this.state.enrollments}
-						createEnrollment={this.props.createEnrollment}	
+						createEnrollment={this.createEnrollment}	
 					/>
 
-					
 
 				{ this.state.idOfCourseToEdit !== -1 
 					&& 
