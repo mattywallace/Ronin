@@ -18,7 +18,7 @@ export default function MilestoneList(props) {
 					<Button onClick={ () => props.editMilestone(milestone.id)} >
 						Edit Milestone
 					</Button>
-					<Button onClick={ () => props.deleteMilestone(milestone.id)}> 
+					<Button className='negative ui button' onClick={ () => props.deleteMilestone(milestone.id)}> 
 						Delete Milestone
 					</Button>
 				</Card.Content>

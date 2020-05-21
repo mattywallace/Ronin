@@ -24,7 +24,7 @@ export default class EnrollmentList extends Component {
 							{enrollment.enrolled_course.course_name}
 						</Card.Header>
 						<Card.Description>
-
+						
 						</Card.Description>
 						<Button className='negative mini ui button' onClick={() => this.props.deleteEnrollment(enrollment.id) }>
 							Cancel Enrollment
