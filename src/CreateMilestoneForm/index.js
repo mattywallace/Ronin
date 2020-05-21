@@ -18,7 +18,7 @@ export default class CreateMilestoneForm extends Component {
 
 	handleSubmit = (event) => {
 		event.preventDefault()
-		this.props.createMilestone()
+		this.props.createMilestone(this.state)
 		this.setState({
 			prompt:'',
 			resources:'',
